@@ -26,8 +26,6 @@ class MainFragment : Fragment(), MoviesContract.View {
     lateinit var upcomingMoviesAdapter: UpcomingMoviesAdapter
     lateinit var movieListener: MoviesContract.UserActionListener
 
-    var apiKey: String = "38594c476985d7c2fad6093dc2ac98f7"
-
     companion object {
         fun newInstance() = MainFragment()
     }

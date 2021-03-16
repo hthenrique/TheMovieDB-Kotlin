@@ -16,13 +16,14 @@ class RequestApi(private val context: Context?) : ServiceApi{
         val callMovies = retrofitEndPoint.getPopularMovies(apiKey, 1)
         callMovies.enqueue(object: Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                System.out.println("Response " + response.code())
                 if (response.code() == 200){
                     val moviesDetails: List<MoviesDetails> = response.body()!!.results
                     callback.onLoaded(moviesDetails)
                 }
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                System.out.println("Failure " + t.toString())
             }
         })
     }
@@ -37,7 +38,7 @@ class RequestApi(private val context: Context?) : ServiceApi{
                 }
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                System.out.println("Failure " + t.toString())
             }
 
         })
@@ -53,7 +54,7 @@ class RequestApi(private val context: Context?) : ServiceApi{
                 }
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                System.out.println("Failure " + t.toString())
             }
 
         })
@@ -69,7 +70,7 @@ class RequestApi(private val context: Context?) : ServiceApi{
                 }
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                System.out.println("Failure " + t.toString())
             }
 
         })
@@ -86,7 +87,7 @@ class RequestApi(private val context: Context?) : ServiceApi{
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                System.out.println("Failure " + t.toString())
             }
 
         })
