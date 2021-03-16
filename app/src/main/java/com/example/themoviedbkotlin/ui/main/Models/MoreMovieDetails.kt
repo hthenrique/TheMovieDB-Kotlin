@@ -1,10 +1,17 @@
 package com.example.themoviedbkotlin.ui.main.Models
 
-import android.icu.text.CaseMap
 import com.google.gson.annotations.SerializedName
-import org.intellij.lang.annotations.Language
 
-class MovieDetails {
+class MoreMovieDetails {
+
+    @SerializedName("adult")
+    var adult: Boolean = false
+
+    @SerializedName("backdrop_path")
+    var backdrop_path: String = ""
+
+    @SerializedName("budget")
+    var budget: Int = 0
 
     @SerializedName("id")
     var id: Int = 0
@@ -37,5 +44,13 @@ class MovieDetails {
     var releaseDate: String = ""
 
     @SerializedName("genre_ids")
-    var genreIds: List<Integer> = ArrayList()
+    var genreIds: List<Int> = ArrayList()
+
+    data class Genre(
+        @SerializedName("name")
+        var name: String = ""
+    )
+
+    @SerializedName("genre")
+    var genre: ArrayList<Genre>? = null
 }

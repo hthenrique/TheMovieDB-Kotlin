@@ -1,13 +1,15 @@
 package com.example.themoviedbkotlin.ui.main.API
 
-import com.example.themoviedbkotlin.ui.main.Models.MovieDetails
+import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 import com.example.themoviedbkotlin.ui.main.Models.MovieResponse
 
 interface ServiceApi {
     interface ServiceApiCallback<T>{
-        fun onLoaded(movies: List<MovieDetails>)
+        fun onLoaded(movies: List<MoviesDetails>)
     }
-    fun getMovies(apiKey: String?, callback: ServiceApiCallback<MovieResponse>)
-    fun getMoviesTopRated(apiKey: String?, callback: ServiceApiCallback<MovieResponse>)
-    fun getSearch(apiKey: String?, query: String?, callback: ServiceApiCallback<MovieResponse>)
+    fun getPopularMovies(apiKey: String?, callback: ServiceApiCallback<MovieResponse>)
+    fun getTopRatedMovies(apiKey: String?, callback: ServiceApiCallback<MovieResponse>)
+    fun getUpcomingMovies(apiKey: String?, callback: ServiceApiCallback<MovieResponse>)
+    fun getSearchMovie(apiKey: String?, searchMovie: String?, callback: ServiceApiCallback<MovieResponse>)
+    fun getMovieDetails(apiKey: String?, movieId: Int, callback: ServiceApiCallback<MovieResponse>)
 }

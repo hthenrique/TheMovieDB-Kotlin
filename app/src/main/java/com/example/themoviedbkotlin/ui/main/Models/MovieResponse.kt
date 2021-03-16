@@ -15,5 +15,5 @@ class MovieResponse {
     var totalPages: Int = 0
 
     @field:SerializedName("results")
-    lateinit var results: ArrayList<MovieDetails>
+    lateinit var results: ArrayList<MoviesDetails>
 }
