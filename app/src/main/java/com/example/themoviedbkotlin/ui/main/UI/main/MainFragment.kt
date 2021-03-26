@@ -1,11 +1,10 @@
 package com.example.themoviedbkotlin.ui.main.UI.main
 
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +13,11 @@ import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 import com.example.themoviedbkotlin.ui.main.UI.Adapters.MoviesPopularAdapter
 import com.example.themoviedbkotlin.ui.main.UI.Adapters.TopRatedMoviesAdapter
 import com.example.themoviedbkotlin.ui.main.UI.Adapters.UpcomingMoviesAdapter
+import com.example.themoviedbkotlin.ui.main.UI.Listeners.MovieListener
+import com.example.themoviedbkotlin.ui.main.UI.movie.MovieDetailsActivity
 import java.util.ArrayList
 
-class MainFragment : Fragment(), MoviesContract.View {
+class MainFragment : Fragment(), MainContract.View, MovieListener {
 
     lateinit var popularMoviesList: RecyclerView
     lateinit var topRatedMoviesList: RecyclerView
@@ -24,23 +25,22 @@ class MainFragment : Fragment(), MoviesContract.View {
     lateinit var moviesPopularAdapter: MoviesPopularAdapter
     lateinit var topRatedMoviesAdapter: TopRatedMoviesAdapter
     lateinit var upcomingMoviesAdapter: UpcomingMoviesAdapter
-    lateinit var movieListener: MoviesContract.UserActionListener
+    lateinit var movieListener: MainContract.UserActionListener
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
 
-        movieListener = MoviesPresenter(this)
+        movieListener = MainPresenter(this)
 
         popularMoviesList = view.findViewById(R.id.popularMoviesList)
         topRatedMoviesList = view.findViewById(R.id.topRatedMoviesList)
         upcomingMoviesList = view.findViewById(R.id.upcomingMoviesList)
 
-        moviesPopularAdapter = MoviesPopularAdapter(ArrayList(0), context)
+        moviesPopularAdapter = MoviesPopularAdapter(ArrayList(0), this, context)
         topRatedMoviesAdapter = TopRatedMoviesAdapter(ArrayList(0), context)
         upcomingMoviesAdapter = UpcomingMoviesAdapter(ArrayList(0), context)
 
@@ -75,6 +75,18 @@ class MainFragment : Fragment(), MoviesContract.View {
 
     override fun showSearchMovies(searchMovies: List<MoviesDetails>) {
         TODO("Not yet implemented")
+    }
+
+    override fun onMovieItemClicked(movieDetails: MoviesDetails) {
+        val moreMovieDetails = Intent(activity, MovieDetailsActivity::class.java)
+        moreMovieDetails.putExtra("movieId", movieDetails.id)
+        moreMovieDetails.putExtra("backdrop_path", movieDetails.backdrop_path)
+        moreMovieDetails.putExtra("title", movieDetails.title)
+        moreMovieDetails.putExtra("posterPath", movieDetails.posterPath)
+        moreMovieDetails.putExtra("voteAverage", movieDetails.voteAverage)
+        moreMovieDetails.putExtra("releaseDate", movieDetails.releaseDate)
+        moreMovieDetails.putExtra("overview", movieDetails.overview)
+        context?.startActivity(moreMovieDetails)
     }
 
 }

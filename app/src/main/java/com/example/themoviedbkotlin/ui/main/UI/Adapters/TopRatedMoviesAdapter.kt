@@ -36,6 +36,9 @@ class TopRatedMoviesAdapter(var movies: List<MoviesDetails>, val context: Contex
         holder.movieRate.rating = (voteAverage.toFloat()) / 2
         holder.movieTitle.text = title
         holder.movieReleaseDate.text = releaseDate
+        holder.itemView.setOnClickListener{
+
+        }
     }
 
     override fun getItemCount(): Int {

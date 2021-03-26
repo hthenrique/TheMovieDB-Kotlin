@@ -46,11 +46,13 @@ class MoreMovieDetails {
     @SerializedName("genre_ids")
     var genreIds: List<Int> = ArrayList()
 
+    @SerializedName("genre")
+    var genre: ArrayList<Genre>? = null
+
     data class Genre(
         @SerializedName("name")
         var name: String = ""
     )
 
-    @SerializedName("genre")
-    var genre: ArrayList<Genre>? = null
+
 }

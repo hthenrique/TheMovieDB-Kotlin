@@ -3,7 +3,7 @@ package com.example.themoviedbkotlin.ui.main.Models
 import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
 
-class MovieResponse {
+class MoviesResponse {
 
     @SerializedName("page")
     var page: Int = 0
@@ -16,4 +16,5 @@ class MovieResponse {
 
     @field:SerializedName("results")
     lateinit var results: ArrayList<MoviesDetails>
+
 }

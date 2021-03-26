@@ -10,9 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themoviedbkotlin.R
 import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
+import com.example.themoviedbkotlin.ui.main.UI.Listeners.MovieListener
 import com.squareup.picasso.Picasso
 
-class MoviesPopularAdapter(var movies: List<MoviesDetails>, val context: Context?): RecyclerView.Adapter<MoviesPopularAdapter.ViewHolder>() {
+class MoviesPopularAdapter(var movies: List<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<MoviesPopularAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -22,8 +23,9 @@ class MoviesPopularAdapter(var movies: List<MoviesDetails>, val context: Context
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val moviesDetails: MoviesDetails = movies.get(position)
+
         val posterLink: String = "http://image.tmdb.org/t/p/original/" + moviesDetails.posterPath
-        val movieId: Int = moviesDetails.id
+
         val title: String = moviesDetails.title
         val releaseDate: String = moviesDetails.releaseDate
         val voteAverage: Double = moviesDetails.voteAverage
@@ -35,6 +37,9 @@ class MoviesPopularAdapter(var movies: List<MoviesDetails>, val context: Context
         holder.movieRate.rating = (voteAverage.toFloat()) / 2
         holder.movieTitle.text = title
         holder.movieReleaseDate.text = releaseDate
+        holder.itemView.setOnClickListener {
+            movieListener.onMovieItemClicked(moviesDetails)
+        }
     }
 
     override fun getItemCount(): Int {

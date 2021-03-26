@@ -2,7 +2,7 @@ package com.example.themoviedbkotlin.ui.main.UI.main
 
 import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 
-interface MoviesContract {
+interface MainContract {
     interface View{
         fun showPopularMovies(popularMovies: List<MoviesDetails>)
         fun showTopRatedMovies(topRatedMovies: List<MoviesDetails>)
