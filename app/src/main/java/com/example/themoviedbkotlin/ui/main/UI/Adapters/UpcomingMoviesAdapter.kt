@@ -10,9 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themoviedbkotlin.R
 import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
+import com.example.themoviedbkotlin.ui.main.UI.Listeners.MovieListener
 import com.squareup.picasso.Picasso
 
-class UpcomingMoviesAdapter(var movies: List<MoviesDetails>, val context: Context?): RecyclerView.Adapter<UpcomingMoviesAdapter.ViewHolder>() {
+class UpcomingMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<UpcomingMoviesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -35,6 +36,9 @@ class UpcomingMoviesAdapter(var movies: List<MoviesDetails>, val context: Contex
         holder.movieRate.rating = (voteAverage.toFloat()) / 2
         holder.movieTitle.text = title
         holder.movieReleaseDate.text = releaseDate
+        holder.itemView.setOnClickListener {
+            movieListener.onMovieItemClicked(moviesDetails)
+        }
     }
 
     override fun getItemCount(): Int {

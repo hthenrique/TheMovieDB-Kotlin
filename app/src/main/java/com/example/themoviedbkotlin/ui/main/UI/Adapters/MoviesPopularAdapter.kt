@@ -23,9 +23,7 @@ class MoviesPopularAdapter(var movies: List<MoviesDetails>, val movieListener: M
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val moviesDetails: MoviesDetails = movies.get(position)
-
         val posterLink: String = "http://image.tmdb.org/t/p/original/" + moviesDetails.posterPath
-
         val title: String = moviesDetails.title
         val releaseDate: String = moviesDetails.releaseDate
         val voteAverage: Double = moviesDetails.voteAverage

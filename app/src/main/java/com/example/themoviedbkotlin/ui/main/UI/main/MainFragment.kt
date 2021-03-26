@@ -41,8 +41,8 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
         upcomingMoviesList = view.findViewById(R.id.upcomingMoviesList)
 
         moviesPopularAdapter = MoviesPopularAdapter(ArrayList(0), this, context)
-        topRatedMoviesAdapter = TopRatedMoviesAdapter(ArrayList(0), context)
-        upcomingMoviesAdapter = UpcomingMoviesAdapter(ArrayList(0), context)
+        topRatedMoviesAdapter = TopRatedMoviesAdapter(ArrayList(0), this, context)
+        upcomingMoviesAdapter = UpcomingMoviesAdapter(ArrayList(0), this, context)
 
         popularMoviesList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         topRatedMoviesList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
