@@ -38,7 +38,7 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
         movieListener = MainPresenter(null, this)
 
         searchMoviesList = view.findViewById(R.id.searchMoviesList)
-        //noResultsLayout = view.findViewById(R.id.noResultsLayout)
+        noResultsLayout = view.findViewById(R.id.noResultsLayout)
         resultsLayout = view.findViewById(R.id.resultsLayout)
 
         searchMoviesAdapter = SearchMoviesAdapter(ArrayList(0), this, context)
@@ -51,13 +51,17 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
     override fun onResume() {
         super.onResume()
         movieListener.loadSearchMovies(query)
-
     }
 
     override fun showSearchMovies(searchMovies: List<MoviesDetails>) {
-        searchMoviesAdapter.replaceData(searchMovies)
-        //noResultsLayout.visibility = View.GONE
-        //resultsLayout.visibility = View.VISIBLE
+        if (searchMovies.isNotEmpty()){
+            searchMoviesAdapter.replaceData(searchMovies)
+            noResultsLayout.visibility = View.GONE
+            resultsLayout.visibility = View.VISIBLE
+        }else{
+            noResultsLayout.visibility = View.VISIBLE
+            resultsLayout.visibility = View.GONE
+        }
     }
 
     override fun onMovieItemClicked(movieDetails: MoviesDetails) {
