@@ -7,9 +7,10 @@ interface MainContract {
         fun showPopularMovies(popularMovies: List<MoviesDetails>)
         fun showTopRatedMovies(topRatedMovies: List<MoviesDetails>)
         fun showUpcomingMovies(upcomingMovies: List<MoviesDetails>)
+    }
+    interface Search{
         fun showSearchMovies(searchMovies: List<MoviesDetails>)
     }
-
     interface UserActionListener{
         fun loadPopularMovies()
         fun loadTopRatedMovies()

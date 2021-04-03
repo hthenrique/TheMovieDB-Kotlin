@@ -68,6 +68,7 @@ class RequestApi(private val context: Context?) : ServiceApi{
                 if (response.code() == 200){
                     val moviesDetails: List<MoviesDetails> = response.body()!!.results
                     callback.onLoaded(moviesDetails)
+                    System.out.println("Search " + moviesDetails)
                 }
             }
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {

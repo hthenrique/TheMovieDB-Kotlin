@@ -34,7 +34,7 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
 
-        movieListener = MainPresenter(this)
+        movieListener = MainPresenter(this, null)
 
         popularMoviesList = view.findViewById(R.id.popularMoviesList)
         topRatedMoviesList = view.findViewById(R.id.topRatedMoviesList)
@@ -71,10 +71,6 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
 
     override fun showUpcomingMovies(upcomingMovies: List<MoviesDetails>) {
         upcomingMoviesAdapter.replaceData(upcomingMovies)
-    }
-
-    override fun showSearchMovies(searchMovies: List<MoviesDetails>) {
-        TODO("Not yet implemented")
     }
 
     override fun onMovieItemClicked(movieDetails: MoviesDetails) {
