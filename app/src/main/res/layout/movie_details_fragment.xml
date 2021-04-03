@@ -95,7 +95,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:numStars="5" />
+                            android:progressTint="@color/light_blue_dark"
+                            android:secondaryProgressTint="@color/light_blue_dark"
+                            android:stepSize="0.1"
+                            tools:targetApi="lollipop" />
 
                         <TableLayout
                             android:layout_width="wrap_content"
@@ -160,34 +163,27 @@
 
                         </TableLayout>
 
-                        <ScrollView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <LinearLayout
+                            <TextView
+                                android:id="@+id/textView18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Overview" />
+
+                            <TextView
+                                android:id="@+id/movieOverview"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/textView18"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:gravity="center_horizontal"
-                                    android:text="Overview" />
-
-                                <TextView
-                                    android:id="@+id/movieOverview"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:gravity="center_horizontal"
-                                    android:text="overview" />
-                            </LinearLayout>
-                        </ScrollView>
+                                android:layout_margin="5dp"
+                                android:gravity="center_horizontal"
+                                android:text="overview" />
+                        </LinearLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

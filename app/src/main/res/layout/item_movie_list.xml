@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp">
@@ -28,13 +29,16 @@
 
             <RatingBar
                 android:id="@+id/movieRate"
-                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:numStars="5"
-                android:stepSize="0.1" />
+                android:progressTint="@color/light_blue_dark"
+                android:secondaryProgressTint="@color/light_blue_dark"
+                android:stepSize="0.1"
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/movieTitle"
