@@ -19,7 +19,7 @@ interface RetrofitEndPoint {
     fun getUpcomingMovies(@Query("api_key") apiKey: String?): Call<MoviesResponse>
 
     @GET("search/multi")
-    fun getSearchMovie(@Query("api_key") apiKey: String?, @Query("query") searchMovie: String?): Call<MoviesResponse>
+    fun getSearchMovie(@Query("api_key") apiKey: String?, @Query("query") searchMovie: String?, @Query("page") page: Int?): Call<MoviesResponse>
 
     @GET("movie/")
     fun getMovieDetails(@Query("movie_id") movieId: Int, @Query("api_key") apiKey: String?): Call<MoviesDetails>

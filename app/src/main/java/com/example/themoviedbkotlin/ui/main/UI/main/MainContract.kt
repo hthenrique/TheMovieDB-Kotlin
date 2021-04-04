@@ -10,11 +10,12 @@ interface MainContract {
     }
     interface Search{
         fun showSearchMovies(searchMovies: List<MoviesDetails>)
+        fun showSearchPages(moviesResultsPage: Int)
     }
     interface UserActionListener{
         fun loadPopularMovies()
         fun loadTopRatedMovies()
         fun loadUpcomingMovies()
-        fun loadSearchMovies(searchMovie: String)
+        fun loadSearchMovies(searchMovie: String, page: Int)
     }
 }

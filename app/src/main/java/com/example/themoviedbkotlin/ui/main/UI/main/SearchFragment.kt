@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.solver.state.State
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +24,12 @@ import com.example.themoviedbkotlin.ui.main.UI.movie.MovieDetailsActivity
 class SearchFragment(val query: String) : Fragment(), MainContract.Search, MovieListener {
 
     lateinit var movieListener: MainContract.UserActionListener
+    lateinit var nestedSearch: NestedScrollView
     lateinit var searchMoviesList: RecyclerView
     lateinit var searchMoviesAdapter: SearchMoviesAdapter
     lateinit var noResultsLayout: ConstraintLayout
     lateinit var resultsLayout: LinearLayout
+    var page: Int = 1
 
     companion object {
         fun newInstance(query: String) = SearchFragment(query)
@@ -37,6 +40,7 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
 
         movieListener = MainPresenter(null, this)
 
+        nestedSearch = view.findViewById(R.id.nestedSearch)
         searchMoviesList = view.findViewById(R.id.searchMoviesList)
         noResultsLayout = view.findViewById(R.id.noResultsLayout)
         resultsLayout = view.findViewById(R.id.resultsLayout)
@@ -50,10 +54,11 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
 
     override fun onResume() {
         super.onResume()
-        movieListener.loadSearchMovies(query)
+        movieListener.loadSearchMovies(query, page)
     }
 
     override fun showSearchMovies(searchMovies: List<MoviesDetails>) {
+        //
         if (searchMovies.isNotEmpty()){
             searchMoviesAdapter.replaceData(searchMovies)
             noResultsLayout.visibility = View.GONE
@@ -61,6 +66,12 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
         }else{
             noResultsLayout.visibility = View.VISIBLE
             resultsLayout.visibility = View.GONE
+        }
+    }
+
+    override fun showSearchPages(moviesResultsPage: Int) {
+        for (i in page..moviesResultsPage){
+
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.themoviedbkotlin.ui.main.API
 
 import android.content.Context
-import com.example.themoviedbkotlin.ui.main.Models.MoreMovieDetails
 import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 import com.example.themoviedbkotlin.ui.main.Models.MoviesResponse
 import retrofit2.Call
@@ -61,13 +60,15 @@ class RequestApi(private val context: Context?) : ServiceApi{
         })
     }
 
-    override fun getSearchMovie(apiKey: String?, searchMovie: String?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
-        val callSearch = retrofitEndPoint.getSearchMovie(apiKey, searchMovie)
+    override fun getSearchMovie(apiKey: String?, searchMovie: String?, page: Int?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
+        val callSearch = retrofitEndPoint.getSearchMovie(apiKey, searchMovie, page)
         callSearch.enqueue(object : Callback<MoviesResponse>{
             override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 if (response.code() == 200){
                     val moviesDetails: List<MoviesDetails> = response.body()!!.results
+                    val moviesResultsPage: Int = response.body()!!.totalResults
                     callback.onLoaded(moviesDetails)
+                    callback.onLoadedPages(moviesResultsPage)
                     System.out.println("Search " + moviesDetails)
                 }
             }

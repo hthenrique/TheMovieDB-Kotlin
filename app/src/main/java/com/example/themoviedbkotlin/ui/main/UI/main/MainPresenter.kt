@@ -24,6 +24,10 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showPopularMovies(movies)
             }
+
+            override fun onLoadedPages(moviesResultsPage: Int) {
+                TODO("Not yet implemented")
+            }
         })
     }
 
@@ -31,6 +35,10 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
         serviceApi.getTopRatedMovies(apiKey, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showTopRatedMovies(movies)
+            }
+
+            override fun onLoadedPages(moviesResultsPage: Int) {
+                TODO("Not yet implemented")
             }
         })
     }
@@ -40,13 +48,21 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showUpcomingMovies(movies)
             }
+
+            override fun onLoadedPages(moviesResultsPage: Int) {
+                TODO("Not yet implemented")
+            }
         })
     }
 
-    override fun loadSearchMovies(searchMovie: String) {
-        serviceApi.getSearchMovie(apiKey, searchMovie, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
+    override fun loadSearchMovies(searchMovie: String, page: Int) {
+        serviceApi.getSearchMovie(apiKey, searchMovie, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 searchMoviesView?.showSearchMovies(movies)
+            }
+
+            override fun onLoadedPages(moviesResultsPage: Int) {
+                searchMoviesView?.showSearchPages(moviesResultsPage)
             }
         })
     }
