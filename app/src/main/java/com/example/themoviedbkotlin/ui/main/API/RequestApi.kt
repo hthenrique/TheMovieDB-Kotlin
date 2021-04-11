@@ -12,8 +12,8 @@ class RequestApi(private val context: Context?) : ServiceApi{
     val retrofitClient: RetrofitClient = RetrofitClient()
     val retrofitEndPoint = retrofitClient.getClient().create(RetrofitEndPoint::class.java)
 
-    override fun getPopularMovies(apiKey: String?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
-        val callMovies = retrofitEndPoint.getPopularMovies(apiKey, 1)
+    override fun getPopularMovies(apiKey: String?, page: Int?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
+        val callMovies = retrofitEndPoint.getPopularMovies(apiKey, page)
         callMovies.enqueue(object: Callback<MoviesResponse>{
             override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 System.out.println("Response " + response.code())
@@ -28,8 +28,8 @@ class RequestApi(private val context: Context?) : ServiceApi{
         })
     }
 
-    override fun getTopRatedMovies(apiKey: String?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
-        val callTopRated = retrofitEndPoint.getTopRatedMovies(apiKey)
+    override fun getTopRatedMovies(apiKey: String?, page: Int?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
+        val callTopRated = retrofitEndPoint.getTopRatedMovies(apiKey, page)
         callTopRated.enqueue(object : Callback<MoviesResponse>{
             override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 if (response.code() == 200){
@@ -44,8 +44,8 @@ class RequestApi(private val context: Context?) : ServiceApi{
         })
     }
 
-    override fun getUpcomingMovies(apiKey: String?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
-        val callUpcoming = retrofitEndPoint.getUpcomingMovies(apiKey)
+    override fun getUpcomingMovies(apiKey: String?, page: Int?, callback: ServiceApi.ServiceApiCallback<MoviesResponse>) {
+        val callUpcoming = retrofitEndPoint.getUpcomingMovies(apiKey, page)
         callUpcoming.enqueue(object : Callback<MoviesResponse>{
             override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 if (response.code() == 200){
@@ -66,9 +66,7 @@ class RequestApi(private val context: Context?) : ServiceApi{
             override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 if (response.code() == 200){
                     val moviesDetails: List<MoviesDetails> = response.body()!!.results
-                    val moviesResultsPage: Int = response.body()!!.totalResults
                     callback.onLoaded(moviesDetails)
-                    callback.onLoadedPages(moviesResultsPage)
                     System.out.println("Search " + moviesDetails)
                 }
             }

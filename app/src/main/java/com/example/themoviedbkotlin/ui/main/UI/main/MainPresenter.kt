@@ -19,38 +19,26 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
         searchMoviesView = moviesSearch
     }
 
-    override fun loadPopularMovies() {
-        serviceApi.getPopularMovies(apiKey, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
+    override fun loadPopularMovies(page: Int) {
+        serviceApi.getPopularMovies(apiKey, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showPopularMovies(movies)
             }
-
-            override fun onLoadedPages(moviesResultsPage: Int) {
-                TODO("Not yet implemented")
-            }
         })
     }
 
-    override fun loadTopRatedMovies() {
-        serviceApi.getTopRatedMovies(apiKey, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
+    override fun loadTopRatedMovies(page: Int) {
+        serviceApi.getTopRatedMovies(apiKey, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showTopRatedMovies(movies)
             }
-
-            override fun onLoadedPages(moviesResultsPage: Int) {
-                TODO("Not yet implemented")
-            }
         })
     }
 
-    override fun loadUpcomingMovies() {
-        serviceApi.getUpcomingMovies(apiKey, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
+    override fun loadUpcomingMovies(page: Int) {
+        serviceApi.getUpcomingMovies(apiKey, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showUpcomingMovies(movies)
-            }
-
-            override fun onLoadedPages(moviesResultsPage: Int) {
-                TODO("Not yet implemented")
             }
         })
     }
@@ -59,10 +47,6 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
         serviceApi.getSearchMovie(apiKey, searchMovie, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 searchMoviesView?.showSearchMovies(movies)
-            }
-
-            override fun onLoadedPages(moviesResultsPage: Int) {
-                searchMoviesView?.showSearchPages(moviesResultsPage)
             }
         })
     }

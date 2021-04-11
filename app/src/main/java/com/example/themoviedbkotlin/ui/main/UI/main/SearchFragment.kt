@@ -49,6 +49,14 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
         searchMoviesList.layoutManager = GridLayoutManager(context, 2)
         searchMoviesList.adapter = searchMoviesAdapter
 
+        nestedSearch.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (scrollY == v!!.getChildAt(0).measuredHeight - v.measuredHeight){
+                page++
+                movieListener.loadSearchMovies(query, page)
+            }
+        }
+
+
         return view
     }
 
@@ -58,7 +66,6 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
     }
 
     override fun showSearchMovies(searchMovies: List<MoviesDetails>) {
-        //
         if (searchMovies.isNotEmpty()){
             searchMoviesAdapter.replaceData(searchMovies)
             noResultsLayout.visibility = View.GONE
@@ -66,12 +73,6 @@ class SearchFragment(val query: String) : Fragment(), MainContract.Search, Movie
         }else{
             noResultsLayout.visibility = View.VISIBLE
             resultsLayout.visibility = View.GONE
-        }
-    }
-
-    override fun showSearchPages(moviesResultsPage: Int) {
-        for (i in page..moviesResultsPage){
-
         }
     }
 

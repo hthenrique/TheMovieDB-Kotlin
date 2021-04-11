@@ -45,7 +45,10 @@ class MoviesPopularAdapter(var movies: List<MoviesDetails>, val movieListener: M
     }
 
     fun replaceData(listMovies: List<MoviesDetails>){
-        setList(listMovies)
+        val movieList = ArrayList<MoviesDetails>()
+        movieList.addAll(movies)
+        movieList.addAll(listMovies)
+        setList(movieList)
         notifyDataSetChanged()
     }
 

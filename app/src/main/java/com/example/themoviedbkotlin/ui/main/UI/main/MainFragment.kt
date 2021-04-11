@@ -26,6 +26,7 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
     lateinit var topRatedMoviesAdapter: TopRatedMoviesAdapter
     lateinit var upcomingMoviesAdapter: UpcomingMoviesAdapter
     lateinit var movieListener: MainContract.UserActionListener
+    var page: Int = 1
 
     companion object {
         fun newInstance() = MainFragment()
@@ -51,14 +52,50 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
         popularMoviesList.adapter = moviesPopularAdapter
         topRatedMoviesList.adapter = topRatedMoviesAdapter
         upcomingMoviesList.adapter = upcomingMoviesAdapter
+
+        initScrollListener()
         return view
+    }
+
+    private fun initScrollListener() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            popularMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dx == recyclerView!!.getChildAt(0).measuredHeight - recyclerView.measuredHeight){
+                        page++
+                        movieListener.loadPopularMovies(page)
+                    }
+                }
+            })
+
+            topRatedMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dx == recyclerView!!.getChildAt(0).measuredHeight - recyclerView.measuredHeight){
+                        page++
+                        movieListener.loadTopRatedMovies(page)
+                    }
+                }
+            })
+
+            upcomingMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dx == recyclerView!!.getChildAt(0).measuredHeight - recyclerView.measuredHeight){
+                        page++
+                        movieListener.loadUpcomingMovies(page)
+                    }
+                }
+            })
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        movieListener.loadPopularMovies()
-        movieListener.loadTopRatedMovies()
-        movieListener.loadUpcomingMovies()
+        movieListener.loadPopularMovies(page)
+        movieListener.loadTopRatedMovies(page)
+        movieListener.loadUpcomingMovies(page)
     }
 
     override fun showPopularMovies(popularMovies: List<MoviesDetails>) {

@@ -13,6 +13,7 @@ import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 import com.example.themoviedbkotlin.ui.main.UI.Listeners.MovieListener
 import com.squareup.picasso.Picasso
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TopRatedMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<TopRatedMoviesAdapter.ViewHolder>() {
 
@@ -47,7 +48,10 @@ class TopRatedMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: 
     }
 
     fun replaceData(listMovies: List<MoviesDetails>){
-        setList(listMovies)
+        val movieList = ArrayList<MoviesDetails>()
+        movieList.addAll(movies)
+        movieList.addAll(listMovies)
+        setList(movieList)
         notifyDataSetChanged()
     }
 
