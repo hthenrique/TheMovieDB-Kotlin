@@ -1,6 +1,8 @@
 package com.example.themoviedbkotlin.ui.main.UI.main
 
 import android.content.Context
+import android.os.Build
+import com.example.themoviedbkotlin.BuildConfig
 import com.example.themoviedbkotlin.ui.main.API.RequestApi
 import com.example.themoviedbkotlin.ui.main.API.ServiceApi
 import com.example.themoviedbkotlin.ui.main.Models.MoviesResponse
@@ -11,7 +13,7 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
     val mMoviesView: MainContract.View?
     val searchMoviesView: MainContract.Search?
     var context: Context? = null
-    private var apiKey: String = "38594c476985d7c2fad6093dc2ac98f7"
+    private var apiKey: String = BuildConfig.TMDB_API_KEY
 
     init {
         serviceApi = RequestApi(context)
