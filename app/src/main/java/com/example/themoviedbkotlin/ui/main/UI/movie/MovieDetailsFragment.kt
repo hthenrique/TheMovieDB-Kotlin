@@ -1,6 +1,5 @@
 package com.example.themoviedbkotlin.ui.main.UI.movie
 
-import android.graphics.Movie
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,20 +32,11 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.movie_details_fragment, container, false)
-        val moviesDetails = MoviesDetails()
 
         val movieId = activity?.intent!!.extras!!.getInt("movieId")
-        val title = activity?.intent!!.extras!!.getString("title")
-        val posterPath = activity?.intent!!.extras!!.getString("posterPath")
-        val backdrop_path = activity?.intent!!.extras!!.getString("backdrop_path")
-        val voteAverage = activity?.intent!!.extras!!.getDouble("voteAverage")
-        val releaseDate = activity?.intent!!.extras!!.getString("releaseDate")
-        val overview = activity?.intent!!.extras!!.getString("overview")
 
-        moviesDetails.id = movieId
         movieDetailsListener = MovieDetailsPresenter(this)
-        movieDetailsListener.loadMovieDetails(moviesDetails)
-        onResume(moviesDetails)
+        movieDetailsListener.loadMovieDetails(movieId)
 
         backgroundPoster = view.findViewById(R.id.backgroundPoster)
         moviePoster = view.findViewById(R.id.movieDetailsPoster)
@@ -57,30 +47,24 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContract.View {
         movieGenre = view.findViewById(R.id.movieGenre)
         movieOverview = view.findViewById(R.id.movieOverview)
 
-        movieTitle.text = title
-        movieReleaseDate.text = releaseDate
-        movieOverview.text = overview
-        movieDetailsRate.rating = (voteAverage.toFloat()) / 2
-
-        Picasso.get()
-            .load("http://image.tmdb.org/t/p/original/" + backdrop_path)
-            .fit().centerCrop()
-            .into(backgroundPoster)
-
-        Picasso.get()
-            .load("http://image.tmdb.org/t/p/original/" + posterPath)
-            .fit().centerCrop()
-            .into(moviePoster)
-
         return view
     }
 
-    private fun onResume(moviesDetails: MoviesDetails) {
-        movieDetailsListener.loadMovieDetails(moviesDetails)
-    }
+    override fun showMovieDetails(moreMovieDetails: MoreMovieDetails) {
+        movieTitle.text = moreMovieDetails.title
+        movieReleaseDate.text = moreMovieDetails.releaseDate
+        movieOverview.text = moreMovieDetails.overview
+        movieDetailsRate.rating = (moreMovieDetails.voteAverage.toFloat()) / 2
 
-    override fun showMovieDetails(moviesDetails: MoviesDetails) {
-        movieTitle.text = moviesDetails.title
+        Picasso.get()
+                .load("http://image.tmdb.org/t/p/original/" + moreMovieDetails.backdrop_path)
+                .fit().centerCrop()
+                .into(backgroundPoster)
+
+        Picasso.get()
+                .load("http://image.tmdb.org/t/p/original/" + moreMovieDetails.posterPath)
+                .fit().centerCrop()
+                .into(moviePoster)
     }
 
 }

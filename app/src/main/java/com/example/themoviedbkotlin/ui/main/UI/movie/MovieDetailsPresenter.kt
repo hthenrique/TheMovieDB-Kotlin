@@ -17,11 +17,10 @@ class MovieDetailsPresenter(movieDetailsView: MovieDetailsContract.View): MovieD
         detailsView = movieDetailsView
     }
 
-    override fun loadMovieDetails(moviesDetails: MoviesDetails) {
-        val movieId = moviesDetails.id
-        serviceApi.getMovieDetails(apiKey, movieId, object : ServiceApi.ServiceApiCallback2<MoviesDetails>{
-            override fun onLoaded(movieDetails: MoviesDetails) {
-                detailsView.showMovieDetails(moviesDetails)
+    override fun loadMovieDetails(movieId: Int) {
+        serviceApi.getMovieDetails(apiKey, movieId, object : ServiceApi.ServiceApiCallback2<MoreMovieDetails>{
+            override fun onLoaded(moreMovieDetails: MoreMovieDetails) {
+                detailsView.showMovieDetails(moreMovieDetails)
             }
         })
     }

@@ -1,6 +1,8 @@
 package com.example.themoviedbkotlin.ui.main.API
 
 import android.content.Context
+import android.util.Log
+import com.example.themoviedbkotlin.ui.main.Models.MoreMovieDetails
 import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 import com.example.themoviedbkotlin.ui.main.Models.MoviesResponse
 import retrofit2.Call
@@ -76,17 +78,18 @@ class RequestApi(private val context: Context?) : ServiceApi{
         })
     }
 
-    override fun getMovieDetails(apiKey: String?, movieId: Int, callback: ServiceApi.ServiceApiCallback2<MoviesDetails>) {
+    override fun getMovieDetails(apiKey: String?, movieId: Int, callback: ServiceApi.ServiceApiCallback2<MoreMovieDetails>) {
         val callDetails = retrofitEndPoint.getMovieDetails(movieId, apiKey)
-        callDetails.enqueue(object : Callback<MoviesDetails>{
-            override fun onResponse(call: Call<MoviesDetails>, response: Response<MoviesDetails>) {
+        callDetails.enqueue(object : Callback<MoreMovieDetails>{
+            override fun onResponse(call: Call<MoreMovieDetails>, response: Response<MoreMovieDetails>) {
                 if (response.code() == 200){
-                    val movieDetails: MoviesDetails = response.body()!!
-                    callback.onLoaded(movieDetails)
-                    System.out.println("More Details " + movieDetails)
+                    val moreMovieDetails: MoreMovieDetails = response.body()!!
+                    callback.onLoaded(moreMovieDetails)
+                }else{
+                    System.out.println("More Details Response Error:  " + response.code().toString())
                 }
             }
-            override fun onFailure(call: Call<MoviesDetails>, t: Throwable) {
+            override fun onFailure(call: Call<MoreMovieDetails>, t: Throwable) {
                 System.out.println("Failure " + t.toString())
             }
         })
