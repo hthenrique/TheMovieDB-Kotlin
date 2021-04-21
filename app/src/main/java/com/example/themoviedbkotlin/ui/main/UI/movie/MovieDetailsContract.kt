@@ -5,10 +5,10 @@ import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 
 interface MovieDetailsContract {
     interface View{
-        fun showMovieDetails(movieDetails: MoviesDetails)
+        fun showMovieDetails(moreMovieDetails: MoreMovieDetails)
     }
 
     interface UserActionListener{
-        fun loadMovieDetails(moviesDetails: MoviesDetails)
+        fun loadMovieDetails(moviesDetails: Int)
     }
 }
