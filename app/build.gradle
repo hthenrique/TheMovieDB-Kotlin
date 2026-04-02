@@ -1,7 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.secrets_gradle_plugin' version '0.4'
 }
+
+def TMDB_API_KEY = '"' + ApiKey + '"' ?: '"API Key not found"'
+def STRING = 'String'
 
 android {
     compileSdkVersion 30
@@ -15,12 +19,17 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        each {type ->
+            type.buildConfigField STRING, 'TMDB_API_KEY', TMDB_API_KEY
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField STRING, 'TMDB_API_KEY', TMDB_API_KEY
         }
     }
     compileOptions {
