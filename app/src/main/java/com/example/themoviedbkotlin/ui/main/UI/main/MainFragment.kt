@@ -26,7 +26,9 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
     lateinit var topRatedMoviesAdapter: TopRatedMoviesAdapter
     lateinit var upcomingMoviesAdapter: UpcomingMoviesAdapter
     lateinit var movieListener: MainContract.UserActionListener
-    var page: Int = 1
+    var popularMoviesPage: Int = 1
+    var topRatedMoviesPage: Int = 1
+    var upcomingMoviesPage: Int = 1
 
     companion object {
         fun newInstance() = MainFragment()
@@ -58,56 +60,63 @@ class MainFragment : Fragment(), MainContract.View, MovieListener {
     }
 
     private fun initScrollListener() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            popularMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dx == recyclerView!!.getChildAt(0).measuredHeight - recyclerView.measuredHeight){
-                        page++
-                        movieListener.loadPopularMovies(page)
-                    }
+        popularMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollHorizontally(1) && dx > 0) {
+                    movieListener.loadMorePopularMovies()
                 }
-            })
+            }
+        })
 
-            topRatedMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dx == recyclerView!!.getChildAt(0).measuredHeight - recyclerView.measuredHeight){
-                        page++
-                        movieListener.loadTopRatedMovies(page)
-                    }
+        topRatedMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollHorizontally(1) && dx > 0) {
+                    movieListener.loadMoreTopRatedMovies()
                 }
-            })
+            }
+        })
 
-            upcomingMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dx == recyclerView!!.getChildAt(0).measuredHeight - recyclerView.measuredHeight){
-                        page++
-                        movieListener.loadUpcomingMovies(page)
-                    }
+        upcomingMoviesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollHorizontally(1) && dx > 0) {
+                    movieListener.loadMoreUpcomingMovies()
                 }
-            })
-        }
+            }
+        })
     }
 
     override fun onResume() {
         super.onResume()
-        movieListener.loadPopularMovies(page)
-        movieListener.loadTopRatedMovies(page)
-        movieListener.loadUpcomingMovies(page)
+        movieListener.loadPopularMovies(1)
+        movieListener.loadTopRatedMovies(1)
+        movieListener.loadUpcomingMovies(1)
     }
 
     override fun showPopularMovies(popularMovies: List<MoviesDetails>) {
         moviesPopularAdapter.replaceData(popularMovies)
     }
 
+    override fun showMorePopularMovies(popularMovies: List<MoviesDetails>) {
+        moviesPopularAdapter.addMovies(popularMovies)
+    }
+
     override fun showTopRatedMovies(topRatedMovies: List<MoviesDetails>) {
         topRatedMoviesAdapter.replaceData(topRatedMovies)
     }
 
+    override fun showMoreTopRatedMovies(topRatedMovies: List<MoviesDetails>) {
+        topRatedMoviesAdapter.addMovies(topRatedMovies)
+    }
+
     override fun showUpcomingMovies(upcomingMovies: List<MoviesDetails>) {
         upcomingMoviesAdapter.replaceData(upcomingMovies)
+    }
+
+    override fun showMoreUpcomingMovies(upcomingMovies: List<MoviesDetails>) {
+        upcomingMoviesAdapter.addMovies(upcomingMovies)
     }
 
     override fun onMovieItemClicked(movieDetails: MoviesDetails) {

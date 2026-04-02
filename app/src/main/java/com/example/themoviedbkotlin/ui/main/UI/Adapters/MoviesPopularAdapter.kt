@@ -13,7 +13,7 @@ import com.example.themoviedbkotlin.ui.main.Models.MoviesDetails
 import com.example.themoviedbkotlin.ui.main.UI.Listeners.MovieListener
 import com.squareup.picasso.Picasso
 
-class MoviesPopularAdapter(var movies: List<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<MoviesPopularAdapter.ViewHolder>() {
+class MoviesPopularAdapter(var movies: MutableList<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<MoviesPopularAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -45,14 +45,17 @@ class MoviesPopularAdapter(var movies: List<MoviesDetails>, val movieListener: M
     }
 
     fun replaceData(listMovies: List<MoviesDetails>){
-        val movieList = ArrayList<MoviesDetails>()
-        movieList.addAll(movies)
-        movieList.addAll(listMovies)
-        setList(movieList)
+        setList(listMovies.toMutableList())
         notifyDataSetChanged()
     }
 
-    fun setList(listMovies: List<MoviesDetails>) {
+    fun addMovies(newMovies: List<MoviesDetails>) {
+        val initialSize = this.movies.size
+        this.movies.addAll(newMovies)
+        notifyItemRangeInserted(initialSize, newMovies.size)
+    }
+
+    fun setList(listMovies: MutableList<MoviesDetails>) {
         movies = listMovies
     }
 

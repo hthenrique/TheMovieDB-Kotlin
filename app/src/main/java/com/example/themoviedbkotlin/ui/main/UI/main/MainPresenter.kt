@@ -15,6 +15,11 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
     var context: Context? = null
     private var apiKey: String = BuildConfig.TMDB_API_KEY
 
+    private var popularMoviesPage: Int = 1
+    private var topRatedMoviesPage: Int = 1
+    private var upcomingMoviesPage: Int = 1
+    private var searchMoviesPage: Int = 1
+
     init {
         serviceApi = RequestApi(context)
         mMoviesView = moviesView
@@ -22,6 +27,7 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
     }
 
     override fun loadPopularMovies(page: Int) {
+        popularMoviesPage = page
         serviceApi.getPopularMovies(apiKey, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showPopularMovies(movies)
@@ -29,7 +35,17 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
         })
     }
 
+    override fun loadMorePopularMovies() {
+        popularMoviesPage++
+        serviceApi.getPopularMovies(apiKey, popularMoviesPage, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
+            override fun onLoaded(movies: List<MoviesDetails>) {
+                mMoviesView?.showMorePopularMovies(movies)
+            }
+        })
+    }
+
     override fun loadTopRatedMovies(page: Int) {
+        topRatedMoviesPage = page
         serviceApi.getTopRatedMovies(apiKey, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showTopRatedMovies(movies)
@@ -37,7 +53,17 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
         })
     }
 
+    override fun loadMoreTopRatedMovies() {
+        topRatedMoviesPage++
+        serviceApi.getTopRatedMovies(apiKey, topRatedMoviesPage, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
+            override fun onLoaded(movies: List<MoviesDetails>) {
+                mMoviesView?.showMoreTopRatedMovies(movies)
+            }
+        })
+    }
+
     override fun loadUpcomingMovies(page: Int) {
+        upcomingMoviesPage = page
         serviceApi.getUpcomingMovies(apiKey, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 mMoviesView?.showUpcomingMovies(movies)
@@ -45,11 +71,23 @@ class MainPresenter(moviesView: MainContract.View?, moviesSearch: MainContract.S
         })
     }
 
+    override fun loadMoreUpcomingMovies() {
+        upcomingMoviesPage++
+        serviceApi.getUpcomingMovies(apiKey, upcomingMoviesPage, object : ServiceApi.ServiceApiCallback<MoviesResponse> {
+            override fun onLoaded(movies: List<MoviesDetails>) {
+                mMoviesView?.showMoreUpcomingMovies(movies)
+            }
+        })
+    }
+
     override fun loadSearchMovies(searchMovie: String, page: Int) {
+        searchMoviesPage = page
         serviceApi.getSearchMovie(apiKey, searchMovie, page, object : ServiceApi.ServiceApiCallback<MoviesResponse>{
             override fun onLoaded(movies: List<MoviesDetails>) {
                 searchMoviesView?.showSearchMovies(movies)
             }
         })
     }
+
+
 }

@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TopRatedMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<TopRatedMoviesAdapter.ViewHolder>() {
+class TopRatedMoviesAdapter(var movies: MutableList<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<TopRatedMoviesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -48,14 +48,17 @@ class TopRatedMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: 
     }
 
     fun replaceData(listMovies: List<MoviesDetails>){
-        val movieList = ArrayList<MoviesDetails>()
-        movieList.addAll(movies)
-        movieList.addAll(listMovies)
-        setList(movieList)
+        setList(listMovies.toMutableList())
         notifyDataSetChanged()
     }
 
-    fun setList(listMovies: List<MoviesDetails>) {
+    fun addMovies(newMovies: List<MoviesDetails>) {
+        val initialSize = this.movies.size
+        this.movies.addAll(newMovies)
+        notifyItemRangeInserted(initialSize, newMovies.size)
+    }
+
+    fun setList(listMovies: MutableList<MoviesDetails>) {
         movies = listMovies
     }
 

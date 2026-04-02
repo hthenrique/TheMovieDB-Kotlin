@@ -28,16 +28,11 @@
                 android:text="Popular Movies"
                 android:textSize="24sp" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularMoviesList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/popularMoviesList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:minHeight="200dp" />
 
             <TextView
                 android:id="@+id/topRatedTitle"
@@ -47,16 +42,11 @@
                 android:text="Top Rated Movies"
                 android:textSize="24sp" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topRatedMoviesList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/topRatedMoviesList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:minHeight="200dp" />
 
             <TextView
                 android:id="@+id/upcomingTitle"
@@ -66,16 +56,11 @@
                 android:text="Upcoming Movies"
                 android:textSize="24sp" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/upcomingMoviesList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/upcomingMoviesList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:minHeight="200dp" />
 
         </LinearLayout>
     </ScrollView>
