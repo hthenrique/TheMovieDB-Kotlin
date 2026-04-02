@@ -7,6 +7,10 @@ interface MainContract {
         fun showPopularMovies(popularMovies: List<MoviesDetails>)
         fun showTopRatedMovies(topRatedMovies: List<MoviesDetails>)
         fun showUpcomingMovies(upcomingMovies: List<MoviesDetails>)
+
+        fun showMorePopularMovies(popularMovies: List<MoviesDetails>)
+        fun showMoreTopRatedMovies(topRatedMovies: List<MoviesDetails>)
+        fun showMoreUpcomingMovies(upcomingMovies: List<MoviesDetails>)
     }
     interface Search{
         fun showSearchMovies(searchMovies: List<MoviesDetails>)
@@ -16,5 +20,8 @@ interface MainContract {
         fun loadTopRatedMovies(page: Int)
         fun loadUpcomingMovies(page: Int)
         fun loadSearchMovies(searchMovie: String, page: Int)
+        fun loadMorePopularMovies()
+        fun loadMoreTopRatedMovies()
+        fun loadMoreUpcomingMovies()
     }
 }

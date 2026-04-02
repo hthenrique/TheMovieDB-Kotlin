@@ -10,10 +10,10 @@ import retrofit2.http.Query
 
 interface RetrofitEndPoint {
 
-    @GET("movie/popular/")
+    @GET("movie/popular")
     fun getPopularMovies(@Query("api_key") apiKey: String?, @Query("page") page: Int?): Call<MoviesResponse>
 
-    @GET("movie/top_rated/")
+    @GET("movie/top_rated")
     fun getTopRatedMovies(@Query("api_key") apiKey: String?, @Query("page") page: Int?): Call<MoviesResponse>
 
     @GET("movie/upcoming")

@@ -14,7 +14,9 @@ import com.example.themoviedbkotlin.ui.main.UI.Listeners.MovieListener
 import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
-class UpcomingMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: MovieListener, val context: Context?): RecyclerView.Adapter<UpcomingMoviesAdapter.ViewHolder>() {
+class UpcomingMoviesAdapter(private var movies: MutableList<MoviesDetails>,
+                            val movieListener: MovieListener,
+                            val context: Context?): RecyclerView.Adapter<UpcomingMoviesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -47,15 +49,18 @@ class UpcomingMoviesAdapter(var movies: List<MoviesDetails>, val movieListener: 
     }
 
     fun replaceData(listMovies: List<MoviesDetails>){
-        val moviesList = ArrayList<MoviesDetails>()
-        moviesList.addAll(movies)
-        moviesList.addAll(listMovies)
-        setList(moviesList)
+        setList(listMovies.toMutableList())
         notifyDataSetChanged()
     }
 
-    fun setList(listMovies: List<MoviesDetails>) {
-        movies = listMovies
+    fun addMovies(newMovies: List<MoviesDetails>) {
+        val initialSize = this.movies.size
+        this.movies.addAll(newMovies)
+        notifyItemRangeInserted(initialSize, newMovies.size)
+    }
+
+    fun setList(listMovies: MutableList<MoviesDetails>) {
+        this.movies = listMovies
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
